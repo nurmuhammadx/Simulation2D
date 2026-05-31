@@ -7,7 +7,7 @@ import map.Map;
 public class MapConsoleRenderer {
     private final static String ROCK = "\uD83E\uDEA8";
     private final static String GRASS = "\uD83C\uDF31";
-    private final static String TREE = "\uD83C\uDF33";
+    private final static String TREE = "\uD83C\uDF32";
     private final static String PREDATOR = "\uD83D\uDC3A";
     private final static String HERBIVORE = "\uD83D\uDC30";
     private final static String BG_SAND = "\u001B[48;5;222m";
@@ -31,11 +31,11 @@ public class MapConsoleRenderer {
     }
 
     private String setBackgroundColor(Coordinates coordinates) {
-        return defaultBackgroundColor("    ", Map.isSquareGreen(coordinates));
+        return defaultBackgroundColor("    ", Map.isSquareOrange(coordinates));
     }
 
     private String setEntitySprite(Entity entity) {
-        return defaultBackgroundColor(" " + selectEntitySprite(entity) + " ", Map.isSquareGreen(entity.coordinates));
+        return defaultBackgroundColor(" " + selectEntitySprite(entity) + " ", Map.isSquareOrange(entity.coordinates));
     }
 
     private String selectEntitySprite(Entity entity) {
@@ -49,9 +49,9 @@ public class MapConsoleRenderer {
         };
     }
 
-    private String defaultBackgroundColor(String sprite, boolean isSquareGreen) {
+    private String defaultBackgroundColor(String sprite, boolean isSquareOrange) {
         String result = sprite;
-        if (isSquareGreen) {
+        if (isSquareOrange) {
             result = BG_ORANGE + result;
         } else {
             result = BG_SAND + result;

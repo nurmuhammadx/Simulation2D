@@ -24,7 +24,7 @@ public class Map {
         entity.coordinates = coordinates;
         entities.put(coordinates, entity);
     }
-    public static boolean isSquareGreen(Coordinates coordinates) {
+    public static boolean isSquareOrange(Coordinates coordinates) {
         return (coordinates.getPositionX() + coordinates.getPositionY()) % 2 == 0;
     }
 

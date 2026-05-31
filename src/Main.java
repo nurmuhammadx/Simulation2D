@@ -4,7 +4,7 @@ import view.MapConsoleRenderer;
 public class Main {
     public static void main(String[] args) {
 
-        Map map = new Map(20, 15);
+        Map map = new Map(17, 15);
         map.setDefPos();
 
         MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
