@@ -1,5 +1,13 @@
+import map.Map;
+import view.MapConsoleRenderer;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        Map map = new Map(20, 15);
+        map.setDefPos();
+
+        MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
+        mapConsoleRenderer.render(map);
     }
 }
