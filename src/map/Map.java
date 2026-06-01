@@ -11,15 +11,15 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Map {
-    private final Integer DEFAULT_ROCK_QUANTITY = 10;
-    private final Integer DEFAULT_TREE_QUANTITY = 10;
+    private final static Integer DEFAULT_ROCK_QUANTITY = 10;
+    private final static Integer DEFAULT_TREE_QUANTITY = 10;
 
     private final Integer herbivoreQuantity;
     private final Integer predatorQuantity;
     private final Integer mapHeight;
     private final Integer mapWidth;
 
-    HashMap<Coordinates, Entity> entities =  new HashMap<>();
+    private final HashMap<Coordinates, Entity> entities =  new HashMap<>();
 
     public Map(Integer mapWidth, Integer mapHeight, Integer predatorQuantity, Integer herbivoreQuantity) {
         this.mapWidth = mapWidth;
@@ -32,15 +32,8 @@ public class Map {
         entity.coordinates = coordinates;
         entities.put(coordinates, entity);
     }
-    public static boolean isSquareOrange(Coordinates coordinates) {
-        return (coordinates.getPositionX() + coordinates.getPositionY()) % 2 == 0;
-    }
 
-    public boolean isSquareEmpty(Coordinates coordinates) {
-        return !entities.containsKey(coordinates);
-    }
-
-    public void setDefPos() {
+    public void setRandomPosition() {
         //Herbivore
         for (int i = 0; i < herbivoreQuantity; i++) {
             int[] position = generateRandomPosition();
@@ -80,6 +73,14 @@ public class Map {
                 setEntity(new Coordinates(position[0], position[1]), new Rock(new Coordinates(position[0], position[1])));
             }
         }
+    }
+
+    public static boolean isSquareOrange(Coordinates coordinates) {
+        return (coordinates.getPositionX() + coordinates.getPositionY()) % 2 == 0;
+    }
+
+    public boolean isSquareEmpty(Coordinates coordinates) {
+        return !entities.containsKey(coordinates);
     }
 
     public Entity getEntity(Coordinates coordinates) {
