@@ -8,16 +8,24 @@ import environment.Rock;
 import environment.Tree;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class Map {
-    private final Integer MAP_WIDTH;
-    private final Integer MAP_HEIGHT;
+    private final Integer DEFAULT_ROCK_QUANTITY = 10;
+    private final Integer DEFAULT_TREE_QUANTITY = 10;
+
+    private final Integer herbivoreQuantity;
+    private final Integer predatorQuantity;
+    private final Integer mapHeight;
+    private final Integer mapWidth;
 
     HashMap<Coordinates, Entity> entities =  new HashMap<>();
 
-    public Map(Integer mapWidth, Integer mapHeight) {
-        MAP_WIDTH = mapWidth;
-        MAP_HEIGHT = mapHeight;
+    public Map(Integer mapWidth, Integer mapHeight, Integer predatorQuantity, Integer herbivoreQuantity) {
+        this.mapWidth = mapWidth;
+        this.mapHeight = mapHeight;
+        this.predatorQuantity = predatorQuantity;
+        this.herbivoreQuantity = herbivoreQuantity;
     }
 
     public void setEntity(Coordinates coordinates, Entity entity) {
@@ -33,11 +41,45 @@ public class Map {
     }
 
     public void setDefPos() {
-        setEntity(new Coordinates(0,0), new Rock(new Coordinates(0,0)));
-        setEntity(new Coordinates(3,5), new Grass(new Coordinates(3,5)));
-        setEntity(new Coordinates(7,3), new Tree(new Coordinates(7,3)));
-        setEntity(new Coordinates(8,3), new Herbivore(new Coordinates(8,3), 5, 50));
-        setEntity(new Coordinates(4,3), new Predator(new Coordinates(4,3), 10, 100, 40));
+        //Herbivore
+        for (int i = 0; i < herbivoreQuantity; i++) {
+            int[] position = generateRandomPosition();
+            if (isSquareEmpty(new Coordinates(position[0], position[1]))) {
+                setEntity(new Coordinates(position[0],position[1]), new Herbivore(new Coordinates(position[0],position[1]), 5, 50));
+            }
+        }
+
+        //Predator
+        for (int i = 0; i < predatorQuantity; i++) {
+            int[] position = generateRandomPosition();
+            if (isSquareEmpty(new Coordinates(position[0], position[1]))) {
+                setEntity(new Coordinates(position[0],position[1]), new Predator(new Coordinates(position[0],position[1]), 10, 100, 40));
+            }
+        }
+
+        //Grass
+        for (int i = 0; i < predatorQuantity; i++) {
+            int[] position = generateRandomPosition();
+            if (isSquareEmpty(new Coordinates(position[0], position[1]))) {
+                setEntity(new Coordinates(position[0], position[1]), new Grass(new Coordinates(position[0], position[1])));
+            }
+        }
+
+        //Tree
+        for (int i = 0; i < DEFAULT_TREE_QUANTITY; i++) {
+            int[] position = generateRandomPosition();
+            if (isSquareEmpty(new Coordinates(position[0], position[1]))) {
+                setEntity(new Coordinates(position[0], position[1]), new Tree(new Coordinates(position[0], position[1])));
+            }
+        }
+
+        //Rock
+        for (int i = 0; i < DEFAULT_ROCK_QUANTITY; i++) {
+            int[] position = generateRandomPosition();
+            if (isSquareEmpty(new Coordinates(position[0], position[1]))) {
+                setEntity(new Coordinates(position[0], position[1]), new Rock(new Coordinates(position[0], position[1])));
+            }
+        }
     }
 
     public Entity getEntity(Coordinates coordinates) {
@@ -45,10 +87,18 @@ public class Map {
     }
 
     public Integer getMAP_HEIGHT() {
-        return MAP_HEIGHT;
+        return mapHeight;
     }
 
     public Integer getMAP_WIDTH() {
-        return MAP_WIDTH;
+        return mapWidth;
+    }
+
+    private int[] generateRandomPosition() {
+        int[] result = new int[2];
+        Random random = new Random();
+        result[0] = random.nextInt(mapWidth);
+        result[1] = random.nextInt(mapHeight);
+        return result;
     }
 }
