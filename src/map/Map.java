@@ -5,13 +5,9 @@ import entity.Entity;
 import java.util.HashMap;
 
 public class Map {
-    private final Integer mapHeight;
-    private final Integer mapWidth;
     private final HashMap<Coordinates, Entity> entities =  new HashMap<>();
 
-    public Map(Integer mapWidth, Integer mapHeight) {
-        this.mapWidth = mapWidth;
-        this.mapHeight = mapHeight;
+    public Map() {
     }
 
     public void setEntity(Coordinates coordinates, Entity entity) {
@@ -29,13 +25,5 @@ public class Map {
 
     public Entity getEntity(Coordinates coordinates) {
         return entities.get(coordinates);
-    }
-
-    public Integer getHeight() {
-        return mapHeight;
-    }
-
-    public Integer getWidth() {
-        return mapWidth;
     }
 }

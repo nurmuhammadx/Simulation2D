@@ -1,5 +1,6 @@
 package view;
 
+import core.SimulationConfig;
 import entity.Entity;
 import map.Coordinates;
 import map.Map;
@@ -14,10 +15,10 @@ public class MapConsoleRenderer {
     private final static String BG_ORANGE = "\u001B[48;5;215m";
     private final static String RESET = "\u001B[0m";
 
-    public void render(Map map) {
-        for (int y = 0; y < map.getHeight(); y++) {
+    public void render(Map map, SimulationConfig simulationConfig) {
+        for (int y = 0; y < simulationConfig.getMapHeight(); y++) {
             StringBuilder line = new StringBuilder();
-            for (int x = 0; x < map.getWidth(); x++) {
+            for (int x = 0; x < simulationConfig.getMapWidth(); x++) {
                 Coordinates coordinates = new Coordinates(x, y);
                 if (map.isSquareEmpty(coordinates)) {
                     line.append(setBackgroundColor(coordinates));

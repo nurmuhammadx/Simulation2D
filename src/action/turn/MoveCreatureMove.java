@@ -1,6 +1,5 @@
 package action.turn;
 
-import action.Action;
+public class MoveCreatureMove  {
 
-public class MoveCreatureMove implements Action {
 }

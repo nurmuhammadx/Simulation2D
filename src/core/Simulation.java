@@ -1,19 +1,36 @@
 package core;
 
-import action.init.InitAction;
+import action.Action;
+import action.turn.*;
 import map.Map;
 import view.MapConsoleRenderer;
 
+import java.util.*;
+
 public class Simulation {
-    private final static Integer MAP_WIDTH = 17;
-    private final static Integer MAP_HEIGHT = 15;
-    Map map = new Map(MAP_WIDTH, MAP_HEIGHT);
+    Map map;
+    MapConsoleRenderer mapConsoleRenderer;
+    SimulationConfig simulationConfig =  new SimulationConfig();
+    Set<Action> actions;
+
+    public Simulation(Map map, MapConsoleRenderer mapConsoleRenderer) {
+        this.map = map;
+        this.mapConsoleRenderer = mapConsoleRenderer;
+    }
 
     public void run(){
-        InitAction action = new InitAction(map);
-        action.init();
-        MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
-        mapConsoleRenderer.render(map);
+        actions = new HashSet<>(List.of(
+                new SpawnGrassAction(map,  simulationConfig),
+                new SpawnRockAction(map, simulationConfig),
+                new SpawnTreeAction(map, simulationConfig),
+                new SpawnHerbivoreAction(map, simulationConfig),
+                new SpawnPredatorAction(map, simulationConfig)
+        ));
+
+        for (Action action : actions) {
+            action.init();
+        }
+        mapConsoleRenderer.render(map, simulationConfig);
     }
 
     public void nextTurn() {
