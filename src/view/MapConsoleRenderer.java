@@ -15,9 +15,9 @@ public class MapConsoleRenderer {
     private final static String RESET = "\u001B[0m";
 
     public void render(Map map) {
-        for (int y = 0; y < map.getMAP_HEIGHT(); y++) {
+        for (int y = 0; y < map.getHeight(); y++) {
             StringBuilder line = new StringBuilder();
-            for (int x = 0; x < map.getMAP_WIDTH(); x++) {
+            for (int x = 0; x < map.getWidth(); x++) {
                 Coordinates coordinates = new Coordinates(x, y);
                 if (map.isSquareEmpty(coordinates)) {
                     line.append(setBackgroundColor(coordinates));
