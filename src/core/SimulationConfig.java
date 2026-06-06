@@ -7,7 +7,7 @@ public class SimulationConfig {
     private final Integer predatorCount = 1;
     private final Integer RockCount = 10;
     private final Integer TreeCount = 10;
-    private final Integer GrassCount = 10;
+    private final Integer GrassCount = 1;
 
     public SimulationConfig() {}
 

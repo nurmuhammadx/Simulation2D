@@ -30,4 +30,12 @@ public class Coordinates {
     public int hashCode() {
         return Objects.hash(positionX, positionY);
     }
+
+    @Override
+    public String toString() {
+        return "Coordinates{" +
+                "positionX=" + positionX +
+                ", positionY=" + positionY +
+                '}';
+    }
 }

@@ -1,13 +1,23 @@
 import core.Simulation;
-import map.Map;
+import core.SimulationConfig;
+import map.Coordinates;
+import map.SimulationMap;
+import pathfinding.impl.BfsPathFinder;
 import view.MapConsoleRenderer;
 
 public class Main {
     public static void main(String[] args) {
-        Map map = new Map();
+        SimulationMap simulationMap = new SimulationMap();
         MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
 
-        Simulation simulation = new Simulation(map, mapConsoleRenderer);
+        Simulation simulation = new Simulation(simulationMap, mapConsoleRenderer);
         simulation.run();
+
+
+//        BfsPathFinder bfsPathFinder = new BfsPathFinder();
+//        bfsPathFinder.findPath(new Coordinates(0, 0), new Coordinates(1,5), new SimulationConfig()).forEach(System.out::println);
+
+
+
     }
 }

@@ -1,7 +1,10 @@
-package creature.impl;
+package entity.creature.impl;
 
-import creature.Creature;
+import core.SimulationConfig;
+import entity.creature.Creature;
 import map.Coordinates;
+import map.SimulationMap;
+import pathfinding.IPathfinder;
 
 public class Predator extends Creature {
     private final Integer attackPower;
@@ -12,7 +15,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void makeMove() {
+    public void makeMove(SimulationMap simulationMap,  IPathfinder pathFinder,  SimulationConfig config) {
 
     }
 }

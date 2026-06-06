@@ -1,9 +1,9 @@
 package view;
 
 import core.SimulationConfig;
-import entity.Entity;
+import entity.GameEntity;
 import map.Coordinates;
-import map.Map;
+import map.SimulationMap;
 
 public class MapConsoleRenderer {
     private final static String ROCK = "\uD83E\uDEA8";
@@ -15,15 +15,15 @@ public class MapConsoleRenderer {
     private final static String BG_ORANGE = "\u001B[48;5;215m";
     private final static String RESET = "\u001B[0m";
 
-    public void render(Map map, SimulationConfig simulationConfig) {
+    public void render(SimulationMap simulationMap, SimulationConfig simulationConfig) {
         for (int y = 0; y < simulationConfig.getMapHeight(); y++) {
             StringBuilder line = new StringBuilder();
             for (int x = 0; x < simulationConfig.getMapWidth(); x++) {
                 Coordinates coordinates = new Coordinates(x, y);
-                if (map.isSquareEmpty(coordinates)) {
+                if (simulationMap.isSquareEmpty(coordinates)) {
                     line.append(setBackgroundColor(coordinates));
                 }else {
-                    line.append(setEntitySprite(map.getEntity(coordinates)));
+                    line.append(setEntitySprite(simulationMap.getEntity(coordinates)));
                 }
             }
             line.append(RESET);
@@ -32,15 +32,15 @@ public class MapConsoleRenderer {
     }
 
     private String setBackgroundColor(Coordinates coordinates) {
-        return defaultBackgroundColor("    ", Map.isSquareOrange(coordinates));
+        return defaultBackgroundColor("    ", SimulationMap.isSquareOrange(coordinates));
     }
 
-    private String setEntitySprite(Entity entity) {
-        return defaultBackgroundColor(" " + selectEntitySprite(entity) + " ", Map.isSquareOrange(entity.coordinates));
+    private String setEntitySprite(GameEntity gameEntity) {
+        return defaultBackgroundColor(" " + selectEntitySprite(gameEntity) + " ", SimulationMap.isSquareOrange(gameEntity.getCoordinates()));
     }
 
-    private String selectEntitySprite(Entity entity) {
-        return switch (entity.getClass().getSimpleName()) {
+    private String selectEntitySprite(GameEntity gameEntity) {
+        return switch (gameEntity.getClass().getSimpleName()) {
             case "Rock" -> ROCK;
             case "Grass" -> GRASS;
             case "Tree" -> TREE;
@@ -51,12 +51,6 @@ public class MapConsoleRenderer {
     }
 
     private String defaultBackgroundColor(String sprite, boolean isSquareOrange) {
-        String result = sprite;
-        if (isSquareOrange) {
-            result = BG_ORANGE + result;
-        } else {
-            result = BG_SAND + result;
-        }
-        return result;
+        return isSquareOrange ? BG_ORANGE + sprite : BG_SAND + sprite;
     }
 }

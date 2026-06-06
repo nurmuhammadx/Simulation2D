@@ -1,9 +1,9 @@
-package environment;
+package entity.environment;
 
-import entity.Entity;
+import entity.GameEntity;
 import map.Coordinates;
 
-public class Tree extends Entity {
+public class Tree extends GameEntity {
     public Tree(Coordinates coordinates) {
         super(coordinates);
     }

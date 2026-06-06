@@ -1,22 +1,20 @@
 package action;
 
 import core.SimulationConfig;
-import map.Map;
+import map.SimulationMap;
 
 import java.util.Random;
 
-public abstract class Action {
-    public Map map;
-    public SimulationConfig simulationConfig;
+public abstract class GameAction {
+    protected final SimulationConfig simulationConfig;
 
-    public Action(Map map,  SimulationConfig simulationConfig) {
-        this.map = map;
+    public GameAction(SimulationConfig simulationConfig) {
         this.simulationConfig = simulationConfig;
     }
 
-    public abstract void init();
+    public abstract void init(SimulationMap simulationMap);
 
-    public int[] generateRandomPosition() {
+    protected int[] generateRandomPosition() {
         int[] result = new int[2];
         Random random = new Random();
         result[0] = random.nextInt(simulationConfig.getMapWidth());
