@@ -27,11 +27,11 @@ public class SimulationMap {
         return entities;
     }
 
-    public List<Grass> getGrass() {
-        List<Grass> grassSet = new ArrayList<>();
+    public LinkedList<Coordinates> getGrass() {
+        LinkedList<Coordinates> grassSet = new LinkedList<>();
         for (GameEntity gameEntity : entities.values()) {
             if (gameEntity instanceof Grass grass) {
-                grassSet.add(grass);
+                grassSet.add(gameEntity.getCoordinates());
             }
         }
         return grassSet;

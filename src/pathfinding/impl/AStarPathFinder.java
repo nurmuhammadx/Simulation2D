@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AStarPathFinder implements IPathfinder {
     @Override
-    public List<Coordinates> findPath(Coordinates start, Coordinates target, SimulationConfig simulationConfig) {
+    public List<Coordinates> findPath(Coordinates start, Coordinates target) {
         return Collections.emptyList();
     }
 }

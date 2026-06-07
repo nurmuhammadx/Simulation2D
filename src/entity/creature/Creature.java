@@ -1,12 +1,11 @@
 package entity.creature;
 
+import action.MoveRequest;
 import core.SimulationConfig;
 import entity.GameEntity;
 import map.Coordinates;
 import map.SimulationMap;
 import pathfinding.IPathfinder;
-
-import java.util.LinkedList;
 
 public abstract class Creature extends GameEntity {
     private final Integer speed;
@@ -21,5 +20,5 @@ public abstract class Creature extends GameEntity {
         this.speed = health;
     }
 
-    public abstract void makeMove(SimulationMap simulationMap, IPathfinder pathFinder, SimulationConfig config);
+    public abstract MoveRequest getMoveRequest(SimulationMap simulationMap, IPathfinder pathFinder);
 }

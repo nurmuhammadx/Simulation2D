@@ -7,8 +7,13 @@ import pathfinding.IPathfinder;
 import java.util.*;
 
 public class BfsPathFinder implements IPathfinder {
+    SimulationConfig simulationConfig;
 
-    public List<Coordinates> findPath(Coordinates start, Coordinates target, SimulationConfig simulationConfig) {
+    public BfsPathFinder(SimulationConfig simulationConfig) {
+        this.simulationConfig = simulationConfig;
+    }
+
+    public List<Coordinates> findPath(Coordinates start, Coordinates target) {
         Queue<Coordinates> queue = new LinkedList<>();
         boolean[][] visited = new boolean[simulationConfig.getMapWidth()][simulationConfig.getMapHeight()];
         Map<Coordinates, Coordinates> parentMap = new HashMap<>();
