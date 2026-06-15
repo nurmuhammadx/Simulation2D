@@ -7,4 +7,5 @@ public class Tree extends GameEntity {
     public Tree(Coordinates coordinates) {
         super(coordinates);
     }
+
 }

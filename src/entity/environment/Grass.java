@@ -7,4 +7,9 @@ public class Grass extends GameEntity {
     public Grass(Coordinates coordinates) {
         super(coordinates);
     }
+
+    @Override
+    public boolean isWalkable() {
+        return true;
+    }
 }

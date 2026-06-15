@@ -14,10 +14,13 @@ public class SpawnPredatorGameAction extends GameAction {
 
     @Override
     public void init(SimulationMap simulationMap) {
-        for (int i = 0; i < simulationConfig.getPredatorCount(); i++) {
+        int spawned = 0;
+        while (spawned < simulationConfig.getPredatorCount()) {
             int[] position = generateRandomPosition();
-            if (simulationMap.isSquareEmpty(new Coordinates(position[0], position[1]))) {
-                simulationMap.setEntity(new Coordinates(position[0],position[1]), new Predator(new Coordinates(position[0],position[1]), 10, 100, 40));
+            Coordinates coordinates = new Coordinates(position[0], position[1]);
+            if (simulationMap.isSquareEmpty(coordinates)) {
+                simulationMap.setEntity(coordinates, new Predator(coordinates, 10, 100, 40));
+                spawned++;
             }
         }
     }

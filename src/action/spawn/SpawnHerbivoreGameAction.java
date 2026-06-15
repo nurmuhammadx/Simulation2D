@@ -14,10 +14,13 @@ public class SpawnHerbivoreGameAction extends GameAction {
 
     @Override
     public void init(SimulationMap simulationMap) {
-        for (int i = 0; i < simulationConfig.getHerbivoreCount(); i++) {
+        int spawned = 0;
+        while (spawned < simulationConfig.getHerbivoreCount()) {
             int[] position = generateRandomPosition();
-            if (simulationMap.isSquareEmpty(new Coordinates(position[0], position[1]))) {
-                simulationMap.setEntity(new Coordinates(position[0],position[1]), new Herbivore(new Coordinates(position[0],position[1]), 5, 50));
+            Coordinates coordinates = new Coordinates(position[0], position[1]);
+            if (simulationMap.isSquareEmpty(coordinates)) {
+                simulationMap.setEntity(coordinates, new Herbivore(coordinates, 5, 50));
+                spawned++;
             }
         }
     }

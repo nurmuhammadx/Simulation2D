@@ -14,10 +14,13 @@ public class SpawnRockGameAction extends GameAction {
 
     @Override
     public void init(SimulationMap simulationMap) {
-        for (int i = 0; i < simulationConfig.getRockCount(); i++) {
+        int spawned = 0;
+        while (spawned < simulationConfig.getRockCount()) {
             int[] position = generateRandomPosition();
-            if (simulationMap.isSquareEmpty(new Coordinates(position[0], position[1]))) {
-                simulationMap.setEntity(new Coordinates(position[0], position[1]), new Rock(new Coordinates(position[0], position[1])));
+            Coordinates coordinates = new Coordinates(position[0], position[1]);
+            if (simulationMap.isSquareEmpty(coordinates)) {
+                simulationMap.setEntity(coordinates, new Rock(coordinates));
+                spawned++;
             }
         }
     }

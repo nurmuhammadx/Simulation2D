@@ -1,18 +1,15 @@
 package entity.creature.impl;
 
-import action.MoveRequest;
-import core.SimulationConfig;
+import entity.GameEntity;
 import entity.creature.Creature;
 import map.Coordinates;
 import map.SimulationMap;
 import pathfinding.IPathfinder;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class Predator extends Creature {
     private final Integer attackPower;
-    private final LinkedList<Coordinates> currentPath = new LinkedList<>();
-    private Coordinates target;
 
     public Predator(Coordinates coordinates, Integer speed, Integer health, Integer attackPower) {
         super(coordinates, speed, health);
@@ -20,7 +17,27 @@ public class Predator extends Creature {
     }
 
     @Override
-    public MoveRequest getMoveRequest(SimulationMap simulationMap, IPathfinder pathFinder) {
-        return null;
+    protected Coordinates findNearestTarget(SimulationMap simulationMap, IPathfinder pathfinder) {
+        Coordinates nearestHerbivore = null;
+        int shortestPath = Integer.MAX_VALUE;
+        for (Coordinates herbivore : simulationMap.getHerbivore()) {
+            List<Coordinates> path = pathfinder.findPath(coordinates, herbivore, simulationMap);
+            if (!path.isEmpty() && path.size() < shortestPath) {
+                shortestPath = path.size();
+                nearestHerbivore = herbivore;
+            }
+        }
+
+        return nearestHerbivore;
+    }
+
+    @Override
+    protected boolean isTargetAlive(SimulationMap simulationMap) {
+        return simulationMap.getHerbivore().contains(target);
+    }
+
+    @Override
+    public boolean canEat(GameEntity entity) {
+        return entity instanceof Herbivore;
     }
 }

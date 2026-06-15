@@ -1,13 +1,13 @@
 package core;
 
-public class SimulationConfig {
+public final class SimulationConfig {
     private final Integer mapWidth = 17;
     private final Integer mapHeight = 15;
-    private final Integer herbivoreCount = 1;
-    private final Integer predatorCount = 1;
+    private final Integer herbivoreCount = 8;
+    private final Integer predatorCount = 3;
     private final Integer RockCount = 10;
     private final Integer TreeCount = 10;
-    private final Integer GrassCount = 10;
+    private final Integer GrassCount = 25;
 
     public SimulationConfig() {}
 

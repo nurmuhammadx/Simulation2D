@@ -1,3 +1,4 @@
+import action.GameAction;
 import core.Simulation;
 import core.SimulationConfig;
 import map.SimulationMap;
@@ -12,6 +13,6 @@ public class Main {
         IPathfinder pathfinder = new BfsPathFinder(new SimulationConfig());
 
         Simulation simulation = new Simulation(simulationMap, mapConsoleRenderer,  pathfinder);
-        simulation.run();
+        simulation.start();
     }
 }

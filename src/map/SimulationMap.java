@@ -1,6 +1,7 @@
 package map;
 
 import entity.GameEntity;
+import entity.creature.impl.Herbivore;
 import entity.environment.Grass;
 
 import java.util.*;
@@ -30,11 +31,21 @@ public class SimulationMap {
     public LinkedList<Coordinates> getGrass() {
         LinkedList<Coordinates> grassSet = new LinkedList<>();
         for (GameEntity gameEntity : entities.values()) {
-            if (gameEntity instanceof Grass grass) {
+            if (gameEntity instanceof Grass) {
                 grassSet.add(gameEntity.getCoordinates());
             }
         }
         return grassSet;
+    }
+
+    public LinkedList<Coordinates> getHerbivore() {
+        LinkedList<Coordinates> herbivoreSet = new LinkedList<>();
+        for (GameEntity gameEntity : entities.values()) {
+            if (gameEntity instanceof Herbivore) {
+                herbivoreSet.add(gameEntity.getCoordinates());
+            }
+        }
+        return herbivoreSet;
     }
 
     public static boolean isSquareOrange(Coordinates coordinates) {

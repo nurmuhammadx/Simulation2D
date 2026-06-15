@@ -1,63 +1,42 @@
 package entity.creature.impl;
 
-import action.MoveRequest;
+import entity.GameEntity;
 import entity.creature.Creature;
+import entity.environment.Grass;
 import map.Coordinates;
 import map.SimulationMap;
 import pathfinding.IPathfinder;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class Herbivore extends Creature {
-    private final LinkedList<Coordinates> currentPath = new LinkedList<>();
-    private Coordinates target;
 
     public Herbivore(Coordinates coordinates, Integer speed, Integer health) {
         super(coordinates, speed, health);
     }
 
     @Override
-    public MoveRequest getMoveRequest(SimulationMap simulationMap, IPathfinder pathFinder) {
-        ensureTarget(simulationMap);
-        ensurePath(pathFinder);
-        if (currentPath.isEmpty()) {
-            return null;
-        }
-        Coordinates nextStep = currentPath.removeFirst();
-        return new MoveRequest(nextStep, this);
-    }
-
-    public void reachedTarget() {
-        target = null;
-        currentPath.clear();
-    }
-
-    private void ensureTarget(SimulationMap simulationMap) {
-        if (target != null && !simulationMap.getGrass().contains(target)) {
-            target = null;
-            currentPath.clear();
-        }
-
-        if (target == null) {
-            if (simulationMap.getGrass().isEmpty()) {
-                return;
+    protected Coordinates findNearestTarget(SimulationMap simulationMap, IPathfinder pathfinder) {
+        Coordinates nearestGrass = null;
+        int shortestPath = Integer.MAX_VALUE;
+        for (Coordinates grass : simulationMap.getGrass()) {
+            List<Coordinates> path = pathfinder.findPath(coordinates, grass, simulationMap);
+            if (!path.isEmpty() && path.size() < shortestPath) {
+                shortestPath = path.size();
+                nearestGrass = grass;
             }
-            target = simulationMap.getGrass().getFirst();
         }
+
+        return nearestGrass;
     }
 
-    private void ensurePath(IPathfinder pathFinder) {
-        if (target == null) {
-            return;
-        }
+    @Override
+    protected boolean isTargetAlive(SimulationMap simulationMap) {
+        return simulationMap.getGrass().contains(target);
+    }
 
-        if (coordinates.equals(target)) {
-            reachedTarget();
-            return;
-        }
-
-        if (currentPath.isEmpty()) {
-            currentPath.addAll(pathFinder.findPath(coordinates, target));
-        }
+    @Override
+    public boolean canEat(GameEntity entity) {
+        return entity instanceof Grass;
     }
 }

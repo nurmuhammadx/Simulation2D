@@ -1,22 +1,24 @@
 package pathfinding.impl;
 
 import core.SimulationConfig;
+import entity.GameEntity;
 import map.Coordinates;
+import map.SimulationMap;
 import pathfinding.IPathfinder;
 
 import java.util.*;
 
 public class BfsPathFinder implements IPathfinder {
-    SimulationConfig simulationConfig;
+    private final SimulationConfig simulationConfig;
 
     public BfsPathFinder(SimulationConfig simulationConfig) {
         this.simulationConfig = simulationConfig;
     }
 
-    public List<Coordinates> findPath(Coordinates start, Coordinates target) {
+    public List<Coordinates> findPath(Coordinates start, Coordinates target, SimulationMap simulationMap) {
         Queue<Coordinates> queue = new LinkedList<>();
         boolean[][] visited = new boolean[simulationConfig.getMapWidth()][simulationConfig.getMapHeight()];
-        Map<Coordinates, Coordinates> parentMap = new HashMap<>();
+        Map<Coordinates, Coordinates> parent = new HashMap<>();
 
         queue.offer(start);
         visited[start.getPositionX()][start.getPositionY()] = true;
@@ -28,21 +30,23 @@ public class BfsPathFinder implements IPathfinder {
             Coordinates current = queue.poll();
 
             if (current.equals(target)) {
-                return buildPath(start, target, parentMap);
+                return buildPath(start, target, parent);
             }
 
-            // Обход 4-х соседей
             for (int i = 0; i < 4; i++) {
                 int nextRow = current.getPositionX() + dRow[i];
                 int nextCol = current.getPositionY() + dCol[i];
 
-                // Проверка границ, стен и посещенных клеток
-                if (nextRow >= 0 && nextRow < simulationConfig.getMapWidth() &&
-                        nextCol >= 0 && nextCol < simulationConfig.getMapHeight()
-                        && !visited[nextRow][nextCol]) {
+                Coordinates nextLocation = new Coordinates(nextRow, nextCol);
+                GameEntity entity = simulationMap.getEntity(nextLocation);
 
+                if (nextRow >= 0 && nextRow < simulationConfig.getMapWidth()
+                        && nextCol >= 0 && nextCol < simulationConfig.getMapHeight()
+                        && !visited[nextRow][nextCol]
+                        && (entity == null || entity.isWalkable() || nextLocation.equals(target))
+                ) {
                     visited[nextRow][nextCol] = true;
-                    parentMap.put(new Coordinates(nextRow, nextCol), current);
+                    parent.put(new Coordinates(nextRow, nextCol), current);
                     queue.offer(new Coordinates(nextRow, nextCol));
                 }
             }
