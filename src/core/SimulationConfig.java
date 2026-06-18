@@ -1,41 +1,13 @@
 package core;
 
 public final class SimulationConfig {
-    private final Integer mapWidth = 17;
-    private final Integer mapHeight = 15;
-    private final Integer herbivoreCount = 2;
-    private final Integer predatorCount = 1;
-    private final Integer RockCount = 10;
-    private final Integer TreeCount = 10;
-    private final Integer GrassCount = 25;
+    public static final int MAP_WIDTH = 17;
+    public static final int MAP_HEIGHT = 15;
+    public static final int HERBIVORE_COUNT = 2;
+    public static final int PREDATOR_COUNT = 1;
+    public static final int ROCK_COUNT = 10;
+    public static final int TREE_COUNT = 10;
+    public static final int GRASS_COUNT = 25;
 
-    public SimulationConfig() {}
-
-    public Integer getPredatorCount() {
-        return predatorCount;
-    }
-
-    public Integer getMapWidth() {
-        return mapWidth;
-    }
-
-    public Integer getMapHeight() {
-        return mapHeight;
-    }
-
-    public Integer getHerbivoreCount() {
-        return herbivoreCount;
-    }
-
-    public Integer getRockCount() {
-        return RockCount;
-    }
-
-    public Integer getTreeCount() {
-        return TreeCount;
-    }
-
-    public Integer getGrassCount() {
-        return GrassCount;
-    }
+    private SimulationConfig() {}
 }

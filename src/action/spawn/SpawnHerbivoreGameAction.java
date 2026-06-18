@@ -8,18 +8,16 @@ import map.SimulationMap;
 
 public class SpawnHerbivoreGameAction extends GameAction {
 
-    public SpawnHerbivoreGameAction(SimulationConfig simulationConfig) {
-        super(simulationConfig);
-    }
+    public SpawnHerbivoreGameAction() {}
 
     @Override
     public void init(SimulationMap simulationMap) {
         int spawned = 0;
-        while (spawned < simulationConfig.getHerbivoreCount()) {
+        while (spawned < SimulationConfig.HERBIVORE_COUNT) {
             int[] position = generateRandomPosition();
             Coordinates coordinates = new Coordinates(position[0], position[1]);
             if (simulationMap.isSquareEmpty(coordinates)) {
-                simulationMap.setEntity(coordinates, new Herbivore(coordinates, 2, 100));
+                simulationMap.putEntity(coordinates, new Herbivore(2, 100));
                 spawned++;
             }
         }

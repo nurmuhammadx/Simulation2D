@@ -1,11 +1,9 @@
 package core;
 
 import action.GameAction;
-import action.impl.InteractionAction;
-import action.impl.MoveCreatureGameAction;
+import action.interaction.MoveCreatureAction;
 import action.spawn.*;
 import map.SimulationMap;
-import pathfinding.IPathfinder;
 import view.MapConsoleRenderer;
 
 import java.util.*;
@@ -13,54 +11,52 @@ import java.util.*;
 public class Simulation {
     SimulationMap simulationMap;
     MapConsoleRenderer mapConsoleRenderer;
-    SimulationConfig simulationConfig =  new SimulationConfig();
-    InteractionAction interactionAction = new InteractionAction();
-    IPathfinder pathfinder;
+    MoveCreatureAction moveCreatureAction;
     Set<GameAction> gameActions;
 
-    public Simulation(SimulationMap simulationMap, MapConsoleRenderer mapConsoleRenderer,  IPathfinder pathfinder) {
+    public Simulation(SimulationMap simulationMap, MapConsoleRenderer mapConsoleRenderer,  MoveCreatureAction moveCreatureAction) {
         this.simulationMap = simulationMap;
         this.mapConsoleRenderer = mapConsoleRenderer;
-        this.pathfinder = pathfinder;
+        this.moveCreatureAction = moveCreatureAction;
     }
-    // надо начинать делать работу с полями creature
+
     public void start(){
-        gameActions = new HashSet<>(List.of(
-                new SpawnGrassGameAction(simulationConfig),
-                new SpawnRockGameAction(simulationConfig),
-                new SpawnTreeGameAction(simulationConfig),
-                new SpawnHerbivoreGameAction(simulationConfig),
-                new SpawnPredatorGameAction(simulationConfig)
-        ));
-
-        for (GameAction gameAction : gameActions) {
-            gameAction.init(simulationMap);
-        }
-
+        initEntitiesSpawn();
         startSimulation();
     }
 
-    //просимулировать и отрендерить один ход
     public void nextTurn() {
-        MoveCreatureGameAction move = new MoveCreatureGameAction(simulationConfig, pathfinder, interactionAction);
-        move.init(simulationMap);
-        mapConsoleRenderer.render(simulationMap, simulationConfig);
+        moveCreatureAction.execute();
+        mapConsoleRenderer.render(simulationMap);
 
     }
 
-    //запустить бесконечный цикл симуляции и рендеринга
     public void startSimulation() {
-        MoveCreatureGameAction move = new MoveCreatureGameAction(simulationConfig, pathfinder,  interactionAction);
-
         while (!simulationMap.getGrass().isEmpty() && !simulationMap.getHerbivore().isEmpty()) {
-            move.init(simulationMap);
-            mapConsoleRenderer.render(simulationMap, simulationConfig);
+            moveCreatureAction.execute();
+            mapConsoleRenderer.render(simulationMap);
             System.out.println();
             try {
                 Thread.sleep(1500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    public void pauseSimulation() {}
+
+    private void initEntitiesSpawn() {
+        gameActions = new HashSet<>(List.of(
+                new SpawnGrassGameAction(),
+                new SpawnRockGameAction(),
+                new SpawnTreeGameAction(),
+                new SpawnHerbivoreGameAction(),
+                new SpawnPredatorGameAction()
+        ));
+
+        for (GameAction gameAction : gameActions) {
+            gameAction.init(simulationMap);
         }
     }
 
@@ -74,6 +70,4 @@ public class Simulation {
             e.printStackTrace();
         }
     }
-    //приостановить бесконечный цикл симуляции и рендеринга
-    public void pauseSimulation() {}
 }

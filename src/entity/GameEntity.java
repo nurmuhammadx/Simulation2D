@@ -5,9 +5,7 @@ import map.Coordinates;
 public abstract class GameEntity {
     protected Coordinates coordinates;
 
-    public GameEntity(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
+    public GameEntity() {}
 
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;

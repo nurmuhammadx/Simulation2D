@@ -9,15 +9,12 @@ import pathfinding.IPathfinder;
 import java.util.*;
 
 public class BfsPathFinder implements IPathfinder {
-    private final SimulationConfig simulationConfig;
 
-    public BfsPathFinder(SimulationConfig simulationConfig) {
-        this.simulationConfig = simulationConfig;
-    }
+    public BfsPathFinder() {}
 
     public List<Coordinates> findPath(Coordinates start, Coordinates target, SimulationMap simulationMap) {
         Queue<Coordinates> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[simulationConfig.getMapWidth()][simulationConfig.getMapHeight()];
+        boolean[][] visited = new boolean[SimulationConfig.MAP_WIDTH][SimulationConfig.MAP_HEIGHT];
         Map<Coordinates, Coordinates> parent = new HashMap<>();
 
         queue.offer(start);
@@ -40,8 +37,8 @@ public class BfsPathFinder implements IPathfinder {
                 Coordinates nextLocation = new Coordinates(nextRow, nextCol);
                 GameEntity entity = simulationMap.getEntity(nextLocation);
 
-                if (nextRow >= 0 && nextRow < simulationConfig.getMapWidth()
-                        && nextCol >= 0 && nextCol < simulationConfig.getMapHeight()
+                if (nextRow >= 0 && nextRow < SimulationConfig.MAP_WIDTH
+                        && nextCol >= 0 && nextCol < SimulationConfig.MAP_HEIGHT
                         && !visited[nextRow][nextCol]
                         && (entity == null || entity.isWalkable() || nextLocation.equals(target))
                 ) {

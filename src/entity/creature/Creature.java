@@ -1,6 +1,6 @@
 package entity.creature;
 
-import action.impl.MoveRequest;
+import action.interaction.MoveRequest;
 import entity.GameEntity;
 import map.Coordinates;
 import map.SimulationMap;
@@ -9,23 +9,22 @@ import pathfinding.IPathfinder;
 import java.util.LinkedList;
 
 public abstract class Creature extends GameEntity {
+    private final Integer MAX_HEALTH = 100;
     private final Integer speed;
     private Integer health;
-    private final Integer MAX_HEALTH = 100;
     protected final LinkedList<Coordinates> currentPath = new LinkedList<>();
     protected Coordinates target;
 
-    public Creature(Coordinates coordinates, Integer speed, Integer health) {
-        super(coordinates);
+    public Creature(Integer speed, Integer health) {
         this.speed = speed;
         this.health = health;
     }
 
+    public abstract void interact(GameEntity target, SimulationMap simulationMap);
+
     protected abstract Coordinates findNearestTarget(SimulationMap simulationMap, IPathfinder pathfinder);
 
     protected abstract boolean isTargetAlive(SimulationMap simulationMap);
-
-    public abstract void interact(GameEntity target, SimulationMap simulationMap);
 
     public MoveRequest getMoveRequest(SimulationMap simulationMap, IPathfinder pathFinder) {
         setTarget(pathFinder, simulationMap);

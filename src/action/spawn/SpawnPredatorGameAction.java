@@ -8,18 +8,16 @@ import map.SimulationMap;
 
 public class SpawnPredatorGameAction extends GameAction {
 
-    public SpawnPredatorGameAction(SimulationConfig simulationConfig) {
-        super(simulationConfig);
-    }
+    public SpawnPredatorGameAction() {}
 
     @Override
     public void init(SimulationMap simulationMap) {
         int spawned = 0;
-        while (spawned < simulationConfig.getPredatorCount()) {
+        while (spawned < SimulationConfig.PREDATOR_COUNT) {
             int[] position = generateRandomPosition();
             Coordinates coordinates = new Coordinates(position[0], position[1]);
             if (simulationMap.isSquareEmpty(coordinates)) {
-                simulationMap.setEntity(coordinates, new Predator(coordinates, 2, 100, 10));
+                simulationMap.putEntity(coordinates, new Predator(2, 100, 10));
                 spawned++;
             }
         }

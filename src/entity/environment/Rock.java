@@ -4,7 +4,7 @@ import entity.GameEntity;
 import map.Coordinates;
 
 public class Rock extends GameEntity {
-    public Rock(Coordinates coordinates) {
-        super(coordinates);
+    public Rock() {
+
     }
 }

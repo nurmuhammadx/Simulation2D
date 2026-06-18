@@ -15,10 +15,10 @@ public class MapConsoleRenderer {
     private final static String BG_ORANGE = "\u001B[48;5;215m";
     private final static String RESET = "\u001B[0m";
 
-    public void render(SimulationMap simulationMap, SimulationConfig simulationConfig) {
-        for (int y = 0; y < simulationConfig.getMapHeight(); y++) {
+    public void render(SimulationMap simulationMap) {
+        for (int y = 0; y < SimulationConfig.MAP_HEIGHT; y++) {
             StringBuilder line = new StringBuilder();
-            for (int x = 0; x < simulationConfig.getMapWidth(); x++) {
+            for (int x = 0; x < SimulationConfig.MAP_WIDTH; x++) {
                 Coordinates coordinates = new Coordinates(x, y);
                 if (simulationMap.isSquareEmpty(coordinates)) {
                     line.append(setBackgroundColor(coordinates));

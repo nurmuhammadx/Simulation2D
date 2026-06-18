@@ -7,11 +7,11 @@ import entity.environment.Grass;
 import java.util.*;
 
 public class SimulationMap {
-    private final HashMap<Coordinates, GameEntity> entities =  new HashMap<>();
+    private final Map<Coordinates, GameEntity> entities =  new HashMap<>();
 
     public SimulationMap() {}
 
-    public void setEntity(Coordinates coordinates, GameEntity gameEntity) {
+    public void putEntity(Coordinates coordinates, GameEntity gameEntity) {
         gameEntity.setCoordinates(coordinates);
         entities.put(coordinates, gameEntity);
     }
@@ -24,7 +24,7 @@ public class SimulationMap {
         return entities.get(coordinates);
     }
 
-    public HashMap<Coordinates, GameEntity> getEntities() {
+    public Map<Coordinates, GameEntity> getEntities() {
         return entities;
     }
 

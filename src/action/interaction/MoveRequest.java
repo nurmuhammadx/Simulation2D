@@ -1,4 +1,4 @@
-package action.impl;
+package action.interaction;
 
 import entity.GameEntity;
 import entity.creature.Creature;

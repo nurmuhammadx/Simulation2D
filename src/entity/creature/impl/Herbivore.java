@@ -11,8 +11,8 @@ import java.util.List;
 
 public class Herbivore extends Creature {
 
-    public Herbivore(Coordinates coordinates, Integer speed, Integer health) {
-        super(coordinates, speed, health);
+    public Herbivore(Integer speed, Integer health) {
+        super(speed, health);
     }
 
     @Override

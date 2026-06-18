@@ -1,7 +1,5 @@
-package action.impl;
+package action.interaction;
 
-import action.GameAction;
-import core.SimulationConfig;
 import entity.creature.Creature;
 import entity.GameEntity;
 import map.Coordinates;
@@ -13,26 +11,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MoveCreatureGameAction extends GameAction {
+public class MoveCreatureAction {
     private final List<MoveRequest> moveRequests = new ArrayList<>();
+    SimulationMap simulationMap;
     private final IPathfinder pathfinder;
     private final InteractionAction interactionAction;
 
-    public MoveCreatureGameAction(SimulationConfig simulationConfig, IPathfinder pathfinder, InteractionAction interactionAction) {
-        super(simulationConfig);
+    public MoveCreatureAction(IPathfinder pathfinder, InteractionAction interactionAction, SimulationMap simulationMap) {
         this.pathfinder = pathfinder;
         this.interactionAction = interactionAction;
+        this.simulationMap = simulationMap;
     }
 
-    @Override
-    public void init(SimulationMap simulationMap) {
-        collect(simulationMap);
+    public void execute() {
+        collect();
         List<MoveRequest> approved = resolveConflicts();
         interactionAction.interact(simulationMap, approved);
-        update(simulationMap, approved);
+        update(approved);
     }
 
-    private void collect(SimulationMap simulationMap) {
+    private void collect() {
         moveRequests.clear();
         for (GameEntity entity : simulationMap.getEntities().values()) {
             if (entity instanceof Creature creature) {
@@ -44,9 +42,9 @@ public class MoveCreatureGameAction extends GameAction {
         }
     }
 
-    private void update(SimulationMap simulationMap, List<MoveRequest> approved) {
-        removeOldPositions(simulationMap, approved);
-        placeNewPositions(simulationMap, approved);
+    private void update(List<MoveRequest> approved) {
+        removeOldPositions(approved);
+        placeNewPositions(approved);
         moveRequests.clear();
     }
 
@@ -64,18 +62,18 @@ public class MoveCreatureGameAction extends GameAction {
         return approved;
     }
 
-    private void placeNewPositions(SimulationMap simulationMap, List<MoveRequest> approved) {
+    private void placeNewPositions(List<MoveRequest> approved) {
         for (MoveRequest request : approved) {
             Coordinates newPosition = request.getTo();
             Creature creature = request.getCreature();
             if (creature.isDead()) {
                 continue;
             }
-            simulationMap.setEntity(newPosition, creature);
+            simulationMap.putEntity(newPosition, creature);
         }
     }
 
-    private void removeOldPositions(SimulationMap simulationMap, List<MoveRequest> approved) {
+    private void removeOldPositions(List<MoveRequest> approved) {
         for (MoveRequest request : approved) {
             simulationMap.removeEntity(request.getFrom());
         }

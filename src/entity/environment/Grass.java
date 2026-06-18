@@ -5,9 +5,7 @@ import map.Coordinates;
 
 public class Grass extends GameEntity {
 
-    public Grass(Coordinates coordinates) {
-        super(coordinates);
-    }
+    public Grass() {}
 
     @Override
     public boolean isWalkable() {

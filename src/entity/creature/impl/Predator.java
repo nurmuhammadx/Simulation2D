@@ -11,8 +11,8 @@ import java.util.List;
 public class Predator extends Creature {
     private final Integer attackPower;
 
-    public Predator(Coordinates coordinates, Integer speed, Integer health, Integer attackPower) {
-        super(coordinates, speed, health);
+    public Predator(Integer speed, Integer health, Integer attackPower) {
+        super(speed, health);
         this.attackPower = attackPower;
     }
 
