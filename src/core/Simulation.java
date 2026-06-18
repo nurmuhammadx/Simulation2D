@@ -23,7 +23,7 @@ public class Simulation {
         this.mapConsoleRenderer = mapConsoleRenderer;
         this.pathfinder = pathfinder;
     }
-
+    // надо начинать делать работу с полями creature
     public void start(){
         gameActions = new HashSet<>(List.of(
                 new SpawnGrassGameAction(simulationConfig),
@@ -52,12 +52,12 @@ public class Simulation {
     public void startSimulation() {
         MoveCreatureGameAction move = new MoveCreatureGameAction(simulationConfig, pathfinder,  interactionAction);
 
-        while (!simulationMap.getGrass().isEmpty() || !simulationMap.getHerbivore().isEmpty()) {
+        while (!simulationMap.getGrass().isEmpty() && !simulationMap.getHerbivore().isEmpty()) {
             move.init(simulationMap);
             mapConsoleRenderer.render(simulationMap, simulationConfig);
             System.out.println();
             try {
-                Thread.sleep(500);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

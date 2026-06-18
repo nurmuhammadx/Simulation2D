@@ -19,7 +19,7 @@ public class SpawnPredatorGameAction extends GameAction {
             int[] position = generateRandomPosition();
             Coordinates coordinates = new Coordinates(position[0], position[1]);
             if (simulationMap.isSquareEmpty(coordinates)) {
-                simulationMap.setEntity(coordinates, new Predator(coordinates, 10, 100, 40));
+                simulationMap.setEntity(coordinates, new Predator(coordinates, 2, 100, 10));
                 spawned++;
             }
         }

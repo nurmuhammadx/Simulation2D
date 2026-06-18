@@ -37,7 +37,13 @@ public class Predator extends Creature {
     }
 
     @Override
-    public boolean canEat(GameEntity entity) {
-        return entity instanceof Herbivore;
+    public void interact(GameEntity target, SimulationMap simulationMap) {
+        if (target instanceof Herbivore herbivore) {
+            herbivore.takeDamage(attackPower);
+            if (herbivore.isDead()) {
+                simulationMap.removeEntity(herbivore.getCoordinates());
+                reachedTarget();
+            }
+        }
     }
 }

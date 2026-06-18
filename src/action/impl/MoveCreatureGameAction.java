@@ -29,7 +29,7 @@ public class MoveCreatureGameAction extends GameAction {
         collect(simulationMap);
         List<MoveRequest> approved = resolveConflicts();
         interactionAction.interact(simulationMap, approved);
-        update(simulationMap,  approved);
+        update(simulationMap, approved);
     }
 
     private void collect(SimulationMap simulationMap) {
@@ -68,6 +68,9 @@ public class MoveCreatureGameAction extends GameAction {
         for (MoveRequest request : approved) {
             Coordinates newPosition = request.getTo();
             Creature creature = request.getCreature();
+            if (creature.isDead()) {
+                continue;
+            }
             simulationMap.setEntity(newPosition, creature);
         }
     }

@@ -36,7 +36,11 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public boolean canEat(GameEntity entity) {
-        return entity instanceof Grass;
+    public void interact(GameEntity target, SimulationMap simulationMap) {
+        if (target instanceof Grass) {
+            simulationMap.removeEntity(target.getCoordinates());
+            heal(5);
+            reachedTarget();
+        }
     }
 }
