@@ -1,5 +1,6 @@
 package entity.creature.impl;
 
+import core.SimulationConfig;
 import entity.GameEntity;
 import entity.creature.Creature;
 import entity.environment.Grass;
@@ -36,10 +37,21 @@ public class Herbivore extends Creature {
     }
 
     @Override
+    protected boolean canEnter(GameEntity entity) {
+        return entity == null || entity instanceof Grass;
+    }
+
+    @Override
+    protected boolean isResourceOrTargetExhausted(SimulationMap simulationMap) {
+        int grass_count = simulationMap.getGrass().size();
+        return grass_count == 0;
+    }
+
+    @Override
     public void interact(GameEntity target, SimulationMap simulationMap) {
         if (target instanceof Grass) {
             simulationMap.removeEntity(target.getCoordinates());
-            heal(5);
+            heal(SimulationConfig.HEAL_AMOUNT);
             reachedTarget();
         }
     }

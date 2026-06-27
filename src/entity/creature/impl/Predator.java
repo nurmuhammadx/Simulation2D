@@ -37,6 +37,17 @@ public class Predator extends Creature {
     }
 
     @Override
+    protected boolean canEnter(GameEntity entity) {
+        return entity == null || entity instanceof Herbivore;
+    }
+
+    @Override
+    protected boolean isResourceOrTargetExhausted(SimulationMap simulationMap) {
+        int herbivore_count = simulationMap.getHerbivore().size();
+        return herbivore_count == 0;
+    }
+
+    @Override
     public void interact(GameEntity target, SimulationMap simulationMap) {
         if (target instanceof Herbivore herbivore) {
             herbivore.takeDamage(attackPower);

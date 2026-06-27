@@ -12,9 +12,10 @@ public class Main {
         MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
         IPathfinder pathfinder = new BfsPathFinder();
         InteractionAction interactionAction = new InteractionAction();
-        MoveCreatureAction moveCreatureAction = new MoveCreatureAction(pathfinder,  interactionAction,  simulationMap);
+        MoveCreatureAction moveCreatureAction = new MoveCreatureAction(pathfinder, simulationMap);
 
-        Simulation simulation = new Simulation(simulationMap, mapConsoleRenderer,  moveCreatureAction);
+        // написать старт стоп симуляции и чет про поток
+        Simulation simulation = new Simulation(simulationMap, mapConsoleRenderer,  moveCreatureAction, interactionAction);
         simulation.start();
     }
 }

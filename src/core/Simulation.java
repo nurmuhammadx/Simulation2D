@@ -1,6 +1,7 @@
 package core;
 
 import action.GameAction;
+import action.interaction.InteractionAction;
 import action.interaction.MoveCreatureAction;
 import action.spawn.*;
 import map.SimulationMap;
@@ -12,12 +13,14 @@ public class Simulation {
     SimulationMap simulationMap;
     MapConsoleRenderer mapConsoleRenderer;
     MoveCreatureAction moveCreatureAction;
+    InteractionAction interactionAction;
     Set<GameAction> gameActions;
 
-    public Simulation(SimulationMap simulationMap, MapConsoleRenderer mapConsoleRenderer,  MoveCreatureAction moveCreatureAction) {
+    public Simulation(SimulationMap simulationMap, MapConsoleRenderer mapConsoleRenderer,  MoveCreatureAction moveCreatureAction,  InteractionAction interactionAction) {
         this.simulationMap = simulationMap;
         this.mapConsoleRenderer = mapConsoleRenderer;
         this.moveCreatureAction = moveCreatureAction;
+        this.interactionAction = interactionAction;
     }
 
     public void start(){
@@ -26,14 +29,15 @@ public class Simulation {
     }
 
     public void nextTurn() {
-        moveCreatureAction.execute();
+        moveCreatureAction.execute(interactionAction);
         mapConsoleRenderer.render(simulationMap);
 
     }
 
     public void startSimulation() {
-        while (!simulationMap.getGrass().isEmpty() && !simulationMap.getHerbivore().isEmpty()) {
-            moveCreatureAction.execute();
+        while (true) {
+            moveCreatureAction.execute(interactionAction);
+            interactionAction.takeHungerDamage(simulationMap);
             mapConsoleRenderer.render(simulationMap);
             System.out.println();
             try {

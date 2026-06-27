@@ -15,15 +15,13 @@ public class MoveCreatureAction {
     private final List<MoveRequest> moveRequests = new ArrayList<>();
     SimulationMap simulationMap;
     private final IPathfinder pathfinder;
-    private final InteractionAction interactionAction;
 
-    public MoveCreatureAction(IPathfinder pathfinder, InteractionAction interactionAction, SimulationMap simulationMap) {
+    public MoveCreatureAction(IPathfinder pathfinder, SimulationMap simulationMap) {
         this.pathfinder = pathfinder;
-        this.interactionAction = interactionAction;
         this.simulationMap = simulationMap;
     }
 
-    public void execute() {
+    public void execute(InteractionAction interactionAction) {
         collect();
         List<MoveRequest> approved = resolveConflicts();
         interactionAction.interact(simulationMap, approved);

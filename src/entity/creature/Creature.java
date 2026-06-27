@@ -1,6 +1,7 @@
 package entity.creature;
 
 import action.interaction.MoveRequest;
+import core.SimulationConfig;
 import entity.GameEntity;
 import map.Coordinates;
 import map.SimulationMap;
@@ -9,7 +10,6 @@ import pathfinding.IPathfinder;
 import java.util.LinkedList;
 
 public abstract class Creature extends GameEntity {
-    private final Integer MAX_HEALTH = 100;
     private final Integer speed;
     private Integer health;
     protected final LinkedList<Coordinates> currentPath = new LinkedList<>();
@@ -26,6 +26,10 @@ public abstract class Creature extends GameEntity {
 
     protected abstract boolean isTargetAlive(SimulationMap simulationMap);
 
+    protected abstract boolean canEnter(GameEntity entity);
+
+    protected abstract boolean isResourceOrTargetExhausted(SimulationMap simulationMap);
+
     public MoveRequest getMoveRequest(SimulationMap simulationMap, IPathfinder pathFinder) {
         setTarget(pathFinder, simulationMap);
         setPath(pathFinder, simulationMap);
@@ -34,7 +38,7 @@ public abstract class Creature extends GameEntity {
             return null;
         }
 
-        Coordinates destination = getDestination();
+        Coordinates destination = getDestination(simulationMap);
         GameEntity targetEntity = simulationMap.getEntity(destination);
         return new MoveRequest(coordinates, destination,this, targetEntity);
     }
@@ -56,8 +60,14 @@ public abstract class Creature extends GameEntity {
         health -= damage;
     }
 
+    public void applyHungerDamage(SimulationMap simulationMap, int damage) {
+        if (isResourceOrTargetExhausted(simulationMap)) {
+            takeDamage(damage);
+        }
+    }
+
     public void heal(int amount) {
-        health = Math.min(MAX_HEALTH, health + amount);
+        health = Math.min(SimulationConfig.CREATURE_MAX_HEALTH, health + amount);
     }
 
     protected void setTarget(IPathfinder pathFinder, SimulationMap simulationMap) {
@@ -86,12 +96,20 @@ public abstract class Creature extends GameEntity {
         }
     }
 
-    private Coordinates getDestination() {
+    private Coordinates getDestination(SimulationMap simulationMap) {
         Coordinates destination = coordinates;
         int steps = Math.min(speed, currentPath.size());
         for (int i = 0; i < steps; i++) {
+            Coordinates next = currentPath.getFirst();
+            GameEntity entity = simulationMap.getEntity(next);
+
+            if (!canEnter(entity)) {
+                break;
+            }
+
             destination = currentPath.removeFirst();
-            if (destination.equals(target)) {
+
+            if (next.equals(target)) {
                 break;
             }
         }

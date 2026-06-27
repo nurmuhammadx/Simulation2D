@@ -17,7 +17,7 @@ public class SpawnHerbivoreGameAction extends GameAction {
             int[] position = generateRandomPosition();
             Coordinates coordinates = new Coordinates(position[0], position[1]);
             if (simulationMap.isSquareEmpty(coordinates)) {
-                simulationMap.putEntity(coordinates, new Herbivore(2, 100));
+                simulationMap.putEntity(coordinates, new Herbivore(SimulationConfig.HERBIVORE_SPEED, SimulationConfig.HERBIVORE_HEALTH));
                 spawned++;
             }
         }
