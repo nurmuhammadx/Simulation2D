@@ -4,6 +4,8 @@ import core.Simulation;
 import map.SimulationMap;
 import pathfinding.IPathfinder;
 import pathfinding.impl.BfsPathFinder;
+import threads.SimulationRunner;
+import view.ConsoleView;
 import view.MapConsoleRenderer;
 
 public class Main {
@@ -16,6 +18,13 @@ public class Main {
 
 
         Simulation simulation = new Simulation(simulationMap, mapConsoleRenderer,  moveCreatureAction, interactionAction);
-        simulation.start();
+        simulation.init();
+
+        SimulationRunner runner = new SimulationRunner(simulation);
+
+        ConsoleView input = new ConsoleView(runner);
+        input.launch();
+
+
     }
 }

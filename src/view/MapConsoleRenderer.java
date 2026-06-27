@@ -4,6 +4,7 @@ import core.SimulationConfig;
 import entity.GameEntity;
 import map.Coordinates;
 import map.SimulationMap;
+import threads.RunnerState;
 
 public class MapConsoleRenderer {
     private static final String ROCK = "🪨";
@@ -29,6 +30,9 @@ public class MapConsoleRenderer {
             line.append(RESET);
             System.out.println(line);
         }
+        System.out.println();
+        System.out.print("Enter command: ");
+        System.out.println();
     }
 
     private String setBackgroundColor(Coordinates coordinates) {

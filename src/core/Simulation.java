@@ -24,31 +24,31 @@ public class Simulation {
         this.interactionAction = interactionAction;
     }
 
-    public void start(){
+    public void init(){
         initEntitiesSpawn();
-        startSimulation();
     }
 
     public void nextTurn() {
         moveCreatureAction.execute(interactionAction);
         interactionAction.takeHungerDamage(simulationMap);
         mapConsoleRenderer.render(simulationMap);
+//        System.out.println();
 
     }
 
-    public void startSimulation() {
-        while (true) {
-            moveCreatureAction.execute(interactionAction);
-            interactionAction.takeHungerDamage(simulationMap);
-            mapConsoleRenderer.render(simulationMap);
-            System.out.println();
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+//    public void startSimulation() {
+//        while (true) {
+//            moveCreatureAction.execute(interactionAction);
+//            interactionAction.takeHungerDamage(simulationMap);
+//            mapConsoleRenderer.render(simulationMap);
+//            System.out.println();
+//            try {
+//                Thread.sleep(1500);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 
     public void pauseSimulation() {}
 
