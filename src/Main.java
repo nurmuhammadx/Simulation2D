@@ -14,7 +14,7 @@ public class Main {
         InteractionAction interactionAction = new InteractionAction();
         MoveCreatureAction moveCreatureAction = new MoveCreatureAction(pathfinder, simulationMap);
 
-        // написать старт стоп симуляции и чет про поток
+
         Simulation simulation = new Simulation(simulationMap, mapConsoleRenderer,  moveCreatureAction, interactionAction);
         simulation.start();
     }

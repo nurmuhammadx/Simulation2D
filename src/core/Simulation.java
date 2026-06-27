@@ -16,7 +16,8 @@ public class Simulation {
     InteractionAction interactionAction;
     Set<GameAction> gameActions;
 
-    public Simulation(SimulationMap simulationMap, MapConsoleRenderer mapConsoleRenderer,  MoveCreatureAction moveCreatureAction,  InteractionAction interactionAction) {
+    public Simulation(SimulationMap simulationMap, MapConsoleRenderer mapConsoleRenderer,
+                      MoveCreatureAction moveCreatureAction, InteractionAction interactionAction) {
         this.simulationMap = simulationMap;
         this.mapConsoleRenderer = mapConsoleRenderer;
         this.moveCreatureAction = moveCreatureAction;
@@ -30,6 +31,7 @@ public class Simulation {
 
     public void nextTurn() {
         moveCreatureAction.execute(interactionAction);
+        interactionAction.takeHungerDamage(simulationMap);
         mapConsoleRenderer.render(simulationMap);
 
     }

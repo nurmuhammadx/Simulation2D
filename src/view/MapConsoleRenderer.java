@@ -6,13 +6,13 @@ import map.Coordinates;
 import map.SimulationMap;
 
 public class MapConsoleRenderer {
-    private final static String ROCK = "\uD83E\uDEA8";
-    private final static String GRASS = "\uD83C\uDF31";
-    private final static String TREE = "\uD83C\uDF32";
-    private final static String PREDATOR = "\uD83D\uDC3A";
-    private final static String HERBIVORE = "\uD83D\uDC30";
-    private final static String BG_SAND = "\u001B[48;5;222m";
-    private final static String BG_ORANGE = "\u001B[48;5;215m";
+    private static final String ROCK = "🪨";
+    private static final String GRASS = "🌿";
+    private static final String TREE = "🌳";
+    private static final String HERBIVORE = "🐇";
+    private static final String PREDATOR  = "🐺";
+    private static final String BG_LIGHT = "\u001B[48;5;194m";
+    private static final String BG_DARK  = "\u001B[48;5;150m";
     private final static String RESET = "\u001B[0m";
 
     public void render(SimulationMap simulationMap) {
@@ -51,6 +51,6 @@ public class MapConsoleRenderer {
     }
 
     private String defaultBackgroundColor(String sprite, boolean isSquareOrange) {
-        return isSquareOrange ? BG_ORANGE + sprite : BG_SAND + sprite;
+        return isSquareOrange ? BG_LIGHT + sprite : BG_DARK + sprite;
     }
 }

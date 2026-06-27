@@ -23,6 +23,9 @@ public class InteractionAction {
         for (GameEntity entity : simulationMap.getEntities().values()) {
             if (entity instanceof Creature creature) {
                 creature.applyHungerDamage(simulationMap, SimulationConfig.HUNGER_DAMAGE);
+                if (creature.isDead()) {
+                    simulationMap.removeEntity(entity.getCoordinates());
+                }
             }
         }
     }
